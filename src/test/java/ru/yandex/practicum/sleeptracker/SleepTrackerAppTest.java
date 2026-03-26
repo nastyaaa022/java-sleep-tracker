@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class SleepTrackerAppTest {
     PrintWriter logFile;
 
-    {
+    public SleepTrackerAppTest() {
         try {
             logFile = new PrintWriter("log.txt");
         } catch (FileNotFoundException e) {
