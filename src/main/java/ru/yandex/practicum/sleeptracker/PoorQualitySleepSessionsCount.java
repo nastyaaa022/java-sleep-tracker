@@ -12,6 +12,7 @@ public class PoorQualitySleepSessionsCount implements SleepAnalysisFunction {
                     "Список сессий пуст", logFile);
         }
         long badDuration = sessions.stream()
+                .filter(sleepingSession -> sleepingSession != null && sleepingSession.getEndTime() != null)
                 .filter(session -> session.getSleepQuality().equals("BAD"))
                 .count();
         return new SleepAnalysisResult("количество сессий с плохим качеством сна", badDuration, logFile);

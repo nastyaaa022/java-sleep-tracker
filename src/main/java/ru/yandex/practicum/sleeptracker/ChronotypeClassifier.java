@@ -18,6 +18,7 @@ public class ChronotypeClassifier implements SleepAnalysisFunction {
         }
 
         List<SleepingSession> nightSessions = sessions.stream()
+                .filter(sleepingSession -> sleepingSession != null && sleepingSession.getEndTime() != null)
                 .filter(this::isNightSession)
                 .collect(Collectors.toList());
 

@@ -29,10 +29,17 @@ public class SleepTrackerApp {
     public static void main(String[] args) throws SleepFileException {
         List<SleepingSession> sessions = new ArrayList<>();
         PrintWriter logFile = null;
+
+        if (args.length == 0) {
+            System.out.println("Ошибка: путь к файлу не был указан.");
+            System.out.println("Использование: java SleepTrackerApp <путь_к_файлу>");
+            return;
+        }
+        String filePath = args[0];
         try {
             logFile = new PrintWriter(Paths.get("log.txt").toFile());
             SleepFileHandler sleepFileHandler = new SleepFileHandler(sessions, logFile);
-            List<String> lines = sleepFileHandler.readSleepDataFromFile("src/main/resources/sleep_log.txt");
+            List<String> lines = sleepFileHandler.readSleepDataFromFile(filePath);
             sessions = lines.stream()
                     .map(line -> {
                         String[] parts = line.split(";");

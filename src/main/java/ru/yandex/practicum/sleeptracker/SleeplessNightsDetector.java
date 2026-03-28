@@ -20,10 +20,12 @@ public class SleeplessNightsDetector implements SleepAnalysisFunction {
         }
 
         SleepingSession firstSession = sessions.stream()
+                .filter(sleepingSession -> sleepingSession != null && sleepingSession.getEndTime() != null)
                 .min(Comparator.comparing(SleepingSession::getStartTime))
                 .orElseThrow(() -> new IllegalArgumentException("Список сессий должен быть непустым"));
 
         SleepingSession lastSession = sessions.stream()
+                .filter(sleepingSession -> sleepingSession != null && sleepingSession.getEndTime() != null)
                 .max(Comparator.comparing(SleepingSession::getEndTime))
                 .orElseThrow(() -> new IllegalArgumentException("Список сессий должен быть непустым"));
 
@@ -76,6 +78,7 @@ public class SleeplessNightsDetector implements SleepAnalysisFunction {
         LocalDateTime nightEndDateTime = date.atTime(nightEnd);
 
         return sessions.stream()
+                .filter(sleepingSession -> sleepingSession != null && sleepingSession.getEndTime() != null)
                 .noneMatch(session -> intersectsWithNightInterval(session, nightStartDateTime, nightEndDateTime));
     }
 

@@ -15,6 +15,7 @@ public class AverageSleepDuration implements SleepAnalysisFunction {
             return new SleepAnalysisResult("Среднее время сна", "Список сессий пуст", logFile);
         }
         long totalDuration = sessions.stream()
+                .filter(sleepingSession -> sleepingSession != null && sleepingSession.getEndTime() != null)
                 .mapToLong(session -> session.getEndTime().toInstant(ZoneOffset.UTC)
                         .getEpochSecond() - session.getStartTime().toInstant(ZoneOffset.UTC).getEpochSecond())
                 .sum();

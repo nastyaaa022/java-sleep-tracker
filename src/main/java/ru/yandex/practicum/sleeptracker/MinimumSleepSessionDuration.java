@@ -16,6 +16,7 @@ public class MinimumSleepSessionDuration implements SleepAnalysisFunction {
         }
 
         long minDuration = sessions.stream()
+                .filter(sleepingSession -> sleepingSession != null && sleepingSession.getEndTime() != null)
                 .mapToLong(session -> session.getEndTime().toInstant(ZoneOffset.UTC).getEpochSecond()
                         - session.getStartTime().toInstant(ZoneOffset.UTC).getEpochSecond())
                 .min()
